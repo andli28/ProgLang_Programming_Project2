@@ -1,0 +1,25 @@
+func add(a: int, b: int): int {
+    func hello(): int {
+        print(1);
+        return 0;
+    }
+    return a + b;
+}
+
+let x: int := 10;
+var y: int := 20;
+
+
+func begin():int {
+    x := x + y;
+    if (x > 15) {
+        func hello(): int {
+            print(1);
+            return 0;
+        }
+        print(x);
+    } else {
+        print(false);
+    }
+}
+

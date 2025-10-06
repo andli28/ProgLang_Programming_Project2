@@ -1,0 +1,7 @@
+# hey a comment
+var y: int := 20;
+# hey another comment
+var z: float := 30.654;
+let x: int := 10; # whoa inline comment
+var a: bool := true;
+# yet another comment
