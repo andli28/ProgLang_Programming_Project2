@@ -65,9 +65,28 @@ $$
 
 ## 2.  What types of AST nodes did you design for the language? What are the members of these AST nodes? What is each AST node supposed to track?
 
+The AST nodes for this language generally match up with the non-terminals for this language, and their members / what they track are the non-resolved terminals and non-terminals on the RHS of their production(s).
+
+For example:
+
+The $func\_decl$ non-terminal corresponds to the `FuncDeclNode` AST node. This AST node has members `id`, `params`, `returnType`, and `body`. These members correspond wiht the non-resolved components of the RHS of the $func\_decl$ production - `IDENTIFIER`, `opt_param_list`, `type`, and `block`. `FUNC_KEYWORD`, `LPAREN_DELIMITER`, `RPAREN_DELIMITER`, and `COLON_DELIMITER` already have a single set token they can be, so they don't need to be tracked.
+
+However, there are some non-terminals that don't have a corresponding AST node. For the list non-terminals - `decl_list`, `code_item_list`, `param_list`, `arg_list` - their productions just use left-recursion to create a list. Since we create a vector for these lists, we just need to assign a member of their parent node. For example, the vector for `decl_list` is added to the member `declarations` in `ProgramNode`. Another example: the vector for `code_item_list` is added to the `statements` member in `BlockNode`.
+
+Other non-terminals that don't have a corresponding AST node include:
+- Optional Non-Terminals: `opt_param_list`, `opt_arg_list`
+    - The use of a vector captures the optional nature of these lists already. If the vectors are empty they represent the empty "optional" state of the param_list.
+- Grouping Non-Terminals: `stmt`, `decl`, `code_item`
+    - Inheritance already takes care of the union types in these grammar rules. `decl` can be a `func_decl` or a `var_decl`. We don't need a corresponding AST node because when defining the `FuncDeclNode` and `VarDeclNode`, we can inherit from `DeclNode` which captures the information we need.
 
 ## 3.  The challenges you faced while designing or coding the parser.
+The biggest hurdle was getting started. Learning how yacc/bison worked was a significant hurdle - it was essentially a new language, and running into error messages that were tough to interpret didn't help. Plus, this language had so many productions - I counted over 20 - so it took a significant amount of time just to get the basic test case working. This means there were a lot of places to go wrong. I'm on a WSL machine, so I had to download `flex` and `bison` before anything worked. This didn't take that long to figure out, but it all adds up. 
 
+To add to the learning curve, flex was also new to me. So this took reading and rereading how flex and bison worked before getting started. This took several hours. When I did eventually get to writing code, I would run into a bunch of syntax errors, and I had to utilize Google and the docs a lot to debug what was going on. After things mostly worked, I had to figure out how `yylloc` and `%destructor` and `%precedence` worked.
+
+Actually designing the language for the parser was straightforward. This type of task has been done many times, in homeworks and lecture and it was what we had learned in class.
+
+I'd say 99% of the difficulty / challenges of this project were figuring out the syntax, and how `flex` / `bison` / the C++ files interacted with each other.
 
 ## 4.  Reflections on flex vs the hand-written scanner in assignment 1.
 
