@@ -89,9 +89,51 @@ Actually designing the language for the parser was straightforward. This type of
 I'd say 99% of the difficulty / challenges of this project were figuring out the syntax, and how `flex` / `bison` / the C++ files interacted with each other.
 
 ## 4.  Reflections on flex vs the hand-written scanner in assignment 1.
+The `flex` approach is certainly much cleaner than writing a hand-written scanner. It standardizes writing a scanner, so people don't have bespoke ways to tokenize input. It acts like a configuration file, and upon running it automatically generates C code that acts like a scanner. It abstracts away all of the common aspects of all lexers, such as location tracking and streaming in input.
 
+It reminds of how CI/CD pipelines use yaml files to run code - and on the version control hosting service, they generate the code to spin up a VM and run code according to your configuration. It reduces the surface area for errors, and allows the user to focus on the key components that they'd like to automate. Similarly, `flex` allows the user to focus on the keyword or regex rules that make up the language, rather than other implementation details.
 
 ## 5.  What did you learn during this assignment?
+I learned how flex and bison can help with the development of a lexical scanner. If I ever wanted to write my own language, I am now aware that there is software out there that can automate a lot of the work.
 
+I also learned how tedious creating a parser can be. Now that I understand flex, bison, and yacc better, it should be easier to do, but learning multiple new languages from scratch and immediately implementing a non-trivial language with at least twenty productions was not pleasant. Everything from the syntax to the error and debug messages were confusing and required extra effort to understand, and having to conform to the syntax to have anything work wasn't fun.
+
+It seems the internet points to [custom parsers being better for error handling and maintainability and adaptibility](https://www.reddit.com/r/Compilers/comments/elhy9n/is_flexbison_a_good_choice_for_a_compiler_in_2020/), so that's also good for me to be aware of what the actual sentiment is for programs like `flex` and `bison` in the real world.
 
 ## 6.  Provide at least three distinct sample test cases you created in addition to the provided samples. These do not have to be semantically correct, but should go beyond the examples in the assignment.
+
+1. [`var y: int := --1 * 20;`](/test/myinput/double_unary.minilang)
+    - This tests that we can have two unary operators back to back. Since a unary operator gets appended to an expression, and there are unary experssions, this should not throw a parser error.
+
+2. [`var y: int := 1 + 2 + 3 + 4 + 5 * 6 - 7 / 8 - -9;`](/test/myinput/expr_expansion.minilang)
+    - This tests that our expression list expands correctly, using left-recursion.
+
+3. [`var y: int := -((-(----1 * 20)));`](/test/myinput/many_paren.minilang)
+    - This tests that our expressions can expand around parentheses correctly.
+
+4. [scope domain expansion](test/myinput/scope_domain_expansion.minilang)
+    - Checks that we can have code blocks inside other code blocks
+```
+func a(): int {
+    if(a <= b) {
+        
+    } else {
+        if(a <= b) {
+            print(3);
+        } else {
+            func c(j: float) : bool {
+                while (x < 16) {
+                    print(x);
+                    x := x * 2;
+                }
+
+                while (x > 1) {
+                    print(x);
+                    x := x / 2;
+                }
+                return true;
+            }
+        }
+    }
+}
+```

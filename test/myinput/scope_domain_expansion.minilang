@@ -1,0 +1,22 @@
+func a(): int {
+    if(a <= b) {
+        
+    } else {
+        if(a <= b) {
+            print(3);
+        } else {
+            func c(j: float) : bool {
+                while (x < 16) {
+                    print(x);
+                    x := x * 2;
+                }
+
+                while (x > 1) {
+                    print(x);
+                    x := x / 2;
+                }
+                return true;
+            }
+        }
+    }
+}
