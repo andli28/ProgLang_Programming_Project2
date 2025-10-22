@@ -5,6 +5,7 @@
 #include <string>
 #include <variant>
 
+#pragma region Forward Declarations for all Node Types
 //////////////////////////////// Forward Declarations for all Node Types ////////////////////////////////
 class ASTNode;
 class CodeItemNode;
@@ -27,6 +28,7 @@ class LiteralNode;
 class FuncCallNode;
 class UnaryOpNode;
 class BinaryOpNode;
+#pragma endregion
 
 // Enums
 enum class PrimitiveType { INT, FLOAT, BOOL };
@@ -56,7 +58,8 @@ class ProgramNode : public ASTNode {
     void print(int indent = 0) const override;
 };
 
-// Declarations
+#pragma region Declarations
+//////////////////////////////// Declarations ////////////////////////////////
 class FuncDeclNode : public DeclNode {
 public:
     std::string id;
@@ -80,7 +83,9 @@ public:
     ~VarDeclNode();
     void print(int indent = 0) const override;
 };
+#pragma endregion
 
+#pragma region Type and Parameter Nodes
 //////////////////////////////// Type and Parameter Nodes ////////////////////////////////
 class TypeNode : public ASTNode {
 public:
@@ -99,7 +104,9 @@ public:
     ~ParamNode();
     void print(int indent = 0) const override;
 };
+#pragma endregion
 
+#pragma region Statement and Block Nodes
 //////////////////////////////// Statement and Block Nodes ////////////////////////////////
 class BlockNode : public ASTNode {
 public:
@@ -158,7 +165,9 @@ public:
     ~ReturnStmtNode();
     void print(int indent = 0) const override;
 };
+#pragma endregion
 
+#pragma region Expression Nodes
 //////////////////////////////// Expression Nodes ////////////////////////////////
 class IdentifierNode : public ExprNode {
 public:
@@ -208,6 +217,7 @@ public:
     ~BinaryOpNode();
     void print(int indent = 0) const override;
 };
+#pragma endregion
 
 // Add other AST node declarations here...
 #endif // ASTNODE_HPP
