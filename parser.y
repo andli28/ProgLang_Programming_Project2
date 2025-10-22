@@ -69,6 +69,14 @@ extern int yylex();
 
 %start program
 
+// Free unused values with %destructor
+%destructor { delete $$; } program code_item decl expr type block param
+%destructor {
+    for (auto* n : *$$) delete n;
+    delete $$;
+} decl_list code_item_list param_list opt_param_list arg_list opt_arg_list
+%destructor { delete $$; } IDENTIFIER
+
 //////////////////////////////// Operator Precedence & Associativity /////////////////////////////////
 
 // (Lowest to Highest)
