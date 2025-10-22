@@ -281,5 +281,5 @@ void yyerror(ASTNode** root, const char* s) {
     (void)root;  // Suppress unused parameter warning
     (void)s;     // suppress unused param warning
 
-    throw ParserException(yylloc.first_line, yylloc.first_column);
+    throw ParserException(yylloc.last_line, yylloc.last_column);
 }
