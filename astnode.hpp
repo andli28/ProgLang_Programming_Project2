@@ -5,7 +5,7 @@
 #include <string>
 #include <variant>
 
-// --- Forward Declarations for all Node Types ---
+//////////////////////////////// Forward Declarations for all Node Types ////////////////////////////////
 class ASTNode;
 class CodeItemNode;
 class DeclNode;
@@ -81,7 +81,7 @@ public:
     void print(int indent = 0) const override;
 };
 
-// --- Type and Parameter Nodes ---
+//////////////////////////////// Type and Parameter Nodes ////////////////////////////////
 class TypeNode : public ASTNode {
 public:
     PrimitiveType type;
@@ -100,7 +100,7 @@ public:
     void print(int indent = 0) const override;
 };
 
-// --- Statement and Block Nodes ---
+//////////////////////////////// Statement and Block Nodes ////////////////////////////////
 class BlockNode : public ASTNode {
 public:
     std::vector<CodeItemNode*>* statements; // Can be DeclNode or StmtNode
@@ -124,7 +124,7 @@ class IfStmtNode : public StmtNode {
 public:
     ExprNode* condition;
     BlockNode* thenBlock;
-    BlockNode* elseBlock; // Can be nullptr
+    BlockNode* elseBlock; // Optional: Can be nullptr
 
     IfStmtNode(ExprNode* condition, BlockNode* thenBlock, BlockNode* elseBlock);
     ~IfStmtNode();
@@ -159,7 +159,7 @@ public:
     void print(int indent = 0) const override;
 };
 
-// --- Expression Nodes ---
+//////////////////////////////// Expression Nodes ////////////////////////////////
 class IdentifierNode : public ExprNode {
 public:
     std::string id;
@@ -167,14 +167,6 @@ public:
     IdentifierNode(const std::string& id);
     void print(int indent = 0) const override;
 };
-
-// class LiteralNode : public ExprNode {
-// public:
-//     std::string value; // Can be an INTEGER_LITERAL, a FLOAT_LITERAL or a BOOL_LITERAL
-
-//     LiteralNode(const std::string& value);
-//     void print(int indent = 0) const override;
-// };
 
 class LiteralNode : public ExprNode {
 public:

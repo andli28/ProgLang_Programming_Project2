@@ -45,7 +45,7 @@ void ProgramNode::print(int indent) const {
     for (auto& decl : declarations) decl->print(indent + 2);
 }
 
-// --- FuncDeclNode ---
+//////////////////////////////// FuncDeclNode ////////////////////////////////
 FuncDeclNode::FuncDeclNode(const std::string& id, std::vector<ParamNode*>* params, TypeNode* returnType, BlockNode* body)
     : id(id), params(params), returnType(returnType), body(body) {}
 
@@ -85,7 +85,7 @@ void FuncDeclNode::print(int indent) const {
 }
 
 
-// --- VarDeclNode ---
+//////////////////////////////// VarDeclNode ////////////////////////////////
 VarDeclNode::VarDeclNode(const std::string& id, TypeNode* type, ExprNode* initExpr, bool isImmutable)
     : id(id), type(type), initExpr(initExpr), isImmutable(isImmutable) {}
 
@@ -107,7 +107,7 @@ void VarDeclNode::print(int indent) const {
     initExpr->print(indent + 2);
 }
 
-// --- TypeNode ---
+//////////////////////////////// TypeNode ////////////////////////////////
 TypeNode::TypeNode(PrimitiveType type) : type(type) {}
 
 void TypeNode::print(int indent) const {
@@ -116,7 +116,7 @@ void TypeNode::print(int indent) const {
 }
 
 
-// --- ParamNode ---
+//////////////////////////////// ParamNode ////////////////////////////////
 ParamNode::ParamNode(const std::string& id, TypeNode* type) : id(id), type(type) {}
 
 ParamNode::~ParamNode() {
@@ -132,7 +132,7 @@ void ParamNode::print(int indent) const {
     type->print(indent + 2);
 }
 
-// --- BlockNode ---
+//////////////////////////////// BlockNode ////////////////////////////////
 BlockNode::BlockNode(std::vector<CodeItemNode*>* statements) : statements(statements) {}
 
 BlockNode::~BlockNode() {
@@ -155,7 +155,7 @@ void BlockNode::print(int indent) const {
 }
 
 
-// --- AssignmentStmtNode ---
+//////////////////////////////// AssignmentStmtNode ////////////////////////////////
 AssignmentStmtNode::AssignmentStmtNode(const std::string& id, ExprNode* expr) : id(id), expr(expr) {}
 
 AssignmentStmtNode::~AssignmentStmtNode() {
@@ -169,7 +169,7 @@ void AssignmentStmtNode::print(int indent) const {
 }
 
 
-// --- IfStmtNode ---
+//////////////////////////////// IfStmtNode ////////////////////////////////
 IfStmtNode::IfStmtNode(ExprNode* condition, BlockNode* thenBlock, BlockNode* elseBlock)
     : condition(condition), thenBlock(thenBlock), elseBlock(elseBlock) {}
 
@@ -201,7 +201,7 @@ void IfStmtNode::print(int indent) const {
 }
 
 
-// --- WhileStmtNode ---
+//////////////////////////////// WhileStmtNode ////////////////////////////////
 WhileStmtNode::WhileStmtNode(ExprNode* condition, BlockNode* body)
     : condition(condition), body(body) {}
 
@@ -224,7 +224,7 @@ void WhileStmtNode::print(int indent) const {
 }
 
 
-// --- PrintStmtNode ---
+//////////////////////////////// PrintStmtNode ////////////////////////////////
 PrintStmtNode::PrintStmtNode(ExprNode* expr) : expr(expr) {}
 
 PrintStmtNode::~PrintStmtNode() {
@@ -238,7 +238,7 @@ void PrintStmtNode::print(int indent) const {
 }
 
 
-// --- ReturnStmtNode ---
+//////////////////////////////// ReturnStmtNode ////////////////////////////////
 ReturnStmtNode::ReturnStmtNode(ExprNode* expr) : expr(expr) {}
 
 ReturnStmtNode::~ReturnStmtNode() {
@@ -252,7 +252,7 @@ void ReturnStmtNode::print(int indent) const {
 }
 
 
-// --- IdentifierNode ---
+//////////////////////////////// IdentifierNode ////////////////////////////////
 IdentifierNode::IdentifierNode(const std::string& id) : id(id) {}
 
 void IdentifierNode::print(int indent) const {
@@ -261,7 +261,7 @@ void IdentifierNode::print(int indent) const {
 }
 
 
-// --- LiteralNode ---
+//////////////////////////////// LiteralNode ////////////////////////////////
 LiteralNode::LiteralNode(int val) : value(val) {}
 LiteralNode::LiteralNode(double val) : value(val) {}
 LiteralNode::LiteralNode(bool val) : value(val) {}
@@ -274,7 +274,7 @@ void LiteralNode::print(int indent) const {
 }
 
 
-// --- FuncCallNode ---
+//////////////////////////////// FuncCallNode ////////////////////////////////
 FuncCallNode::FuncCallNode(const std::string& id, std::vector<ExprNode*>* args) : id(id), args(args) {}
 
 FuncCallNode::~FuncCallNode() {
@@ -303,7 +303,7 @@ void FuncCallNode::print(int indent) const {
 }
 
 
-// --- UnaryOpNode ---
+//////////////////////////////// UnaryOpNode ////////////////////////////////
 UnaryOpNode::UnaryOpNode(ExprNode* expr) : expr(expr) {}
 
 UnaryOpNode::~UnaryOpNode() {
@@ -317,7 +317,7 @@ void UnaryOpNode::print(int indent) const {
 }
 
 
-// --- BinaryOpNode ---
+//////////////////////////////// BinaryOpNode ////////////////////////////////
 BinaryOpNode::BinaryOpNode(ExprNode* left, BinaryOperator op, ExprNode* right)
     : left(left), op(op), right(right) {}
 

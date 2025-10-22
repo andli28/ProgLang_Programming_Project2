@@ -69,7 +69,8 @@ extern int yylex();
 
 %start program
 
-// --- Operator Precedence & Associativity ---
+//////////////////////////////// Operator Precedence & Associativity /////////////////////////////////
+
 // (Lowest to Highest)
 %left EQUAL_OP NEQ_OP
 %left LT_OP GT_OP LEQ_OP GEQ_OP
@@ -78,7 +79,7 @@ extern int yylex();
 %precedence UMINUS // For unary minus precedence
 
 %%
-// --- Top Level Rules ---
+//////////////////////////////// Top Level Rules ////////////////////////////////
 program
     : decl_list END_OF_FILE {
         ProgramNode* ast = new ProgramNode();
@@ -103,7 +104,7 @@ decl
     | var_decl { $$ = $1; }
     ;
 
-// --- Declaration Rules ---
+//////////////////////////////// Declaration Rules ////////////////////////////////
 
 func_decl
     : FUNC_KEYWORD IDENTIFIER LPAREN_DELIMITER opt_param_list RPAREN_DELIMITER COLON_DELIMITER type block {
@@ -123,7 +124,7 @@ var_decl
     }
     ;
 
-// --- Type Rule ---
+//////////////////////////////// Type Rule ////////////////////////////////
 
 type
     : INT_KEYWORD   { $$ = new TypeNode(PrimitiveType::INT); }
@@ -131,7 +132,7 @@ type
     | BOOL_KEYWORD  { $$ = new TypeNode(PrimitiveType::BOOL); }
     ;
 
-// --- Block & Statement Rules ---
+//////////////////////////////// Block & Statement Rules ////////////////////////////////
 
 block
     : LBRACE_DELIMITER code_item_list RBRACE_DELIMITER {
@@ -200,7 +201,7 @@ return_stmt
     }
     ;
 
-// --- Expression Rules ---
+//////////////////////////////// Expression Rules ////////////////////////////////
 
 expr
     : literal                   { $$ = $1; }
@@ -233,7 +234,7 @@ func_call
     }
     ;
 
-// --- Parameter & Argument List Rules ---
+//////////////////////////////// Parameter & Argument List Rules ////////////////////////////////
 
 opt_param_list
     : param_list                { $$ = $1; }
@@ -279,7 +280,7 @@ arg_list
 void yyerror(ASTNode** root, const char* s) {
     // root parameter is required by parse-param but not used here
     (void)root;  // Suppress unused parameter warning
-    (void)s;     // suppress unused param warning
+    (void)s;    // Suppress unused parameter warning
 
     throw ParserException(yylloc.last_line, yylloc.last_column);
 }
