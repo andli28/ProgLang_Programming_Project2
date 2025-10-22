@@ -3,3 +3,5 @@
 *.tab.*
 *.yy.c
 parser
+out
+*.output
