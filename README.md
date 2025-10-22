@@ -50,7 +50,7 @@ Note that this also changes the signature for the `yyerror` method and if you ha
 
 Your parser must throw a `ParserException` as soon as a syntax error is detected. The exception is defined in the `exception.hpp` file. You need to pass the line and column from the global [`yylloc`](https://www.gnu.org/software/bison/manual/html_node/Tracking-Locations.html) variable. Most of the heavy lifting with respect to location tracking is already done in the lexer definition file. This is an example of a parser error:
 
--   **Input**: `var x: int : :=100`
+-   **Input**: `var x: int := 100`
 -   **Output**: `Parser Error at line 1, column 17`
 
 ## 4. Deliverables
