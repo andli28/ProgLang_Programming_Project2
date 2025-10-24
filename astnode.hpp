@@ -5,7 +5,9 @@
 #include <string>
 #include <variant>
 
-//////////////////////////////// Forward Declarations for all Node Types ////////////////////////////////
+//======================================================================
+// Forward Declarations for all Node Types
+//======================================================================
 class ASTNode;
 class CodeItemNode;
 class DeclNode;
@@ -57,7 +59,9 @@ class ProgramNode : public ASTNode {
     void print(int indent = 0) const override;
 };
 
-//////////////////////////////// Declarations ////////////////////////////////
+//======================================================================
+// Declarations
+//======================================================================
 class FuncDeclNode : public DeclNode {
 public:
     std::string id;
@@ -83,7 +87,9 @@ public:
 };
  
 
-//////////////////////////////// Type and Parameter Nodes ////////////////////////////////
+//======================================================================
+// Type and Parameter Nodes
+//======================================================================
 class TypeNode : public ASTNode {
 public:
     PrimitiveType type;
@@ -103,7 +109,9 @@ public:
 };
  
 
-//////////////////////////////// Statement and Block Nodes ////////////////////////////////
+//======================================================================
+// Statement and Block Nodes
+//======================================================================
 class BlockNode : public ASTNode {
 public:
     std::vector<CodeItemNode*>* statements; // Can be DeclNode or StmtNode
@@ -162,7 +170,9 @@ public:
     void print(int indent = 0) const override;
 };
  
-//////////////////////////////// Expression Nodes ////////////////////////////////
+//======================================================================
+// Expression Nodes
+//======================================================================
 class IdentifierNode : public ExprNode {
 public:
     std::string id;
