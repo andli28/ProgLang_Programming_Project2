@@ -10,7 +10,7 @@ std::string primitiveTypeToString(PrimitiveType type) {
         case PrimitiveType::INT:   return "int";
         case PrimitiveType::FLOAT: return "float";
         case PrimitiveType::BOOL:  return "bool";
-        default:                 return "unknown_type";
+        default:                   return "unknown_type";
     }
 }
 
@@ -26,7 +26,7 @@ std::string binaryOpToString(BinaryOperator op) {
         case BinaryOperator::GT:       return ">";
         case BinaryOperator::LEQ:      return "<=";
         case BinaryOperator::GEQ:      return ">=";
-        default:                     return "unknown_op";
+        default:                       return "unknown_op";
     }
 }
 
@@ -45,7 +45,6 @@ void ProgramNode::print(int indent) const {
     for (auto& decl : declarations) decl->print(indent + 2);
 }
 
-#pragma region FuncDeclNode
 //////////////////////////////// FuncDeclNode ////////////////////////////////
 FuncDeclNode::FuncDeclNode(const std::string& id, std::vector<ParamNode*>* params, TypeNode* returnType, BlockNode* body)
     : id(id), params(params), returnType(returnType), body(body) {}
@@ -84,9 +83,7 @@ void FuncDeclNode::print(int indent) const {
     std::cout << "Body:" << std::endl;
     body->print(indent + 2);
 }
-#pragma endregion
 
-#pragma region VarDeclNode
 //////////////////////////////// VarDeclNode ////////////////////////////////
 VarDeclNode::VarDeclNode(const std::string& id, TypeNode* type, ExprNode* initExpr, bool isImmutable)
     : id(id), type(type), initExpr(initExpr), isImmutable(isImmutable) {}
@@ -108,9 +105,7 @@ void VarDeclNode::print(int indent) const {
     std::cout << "Init Expression:" << std::endl;
     initExpr->print(indent + 2);
 }
-#pragma endregion
 
-#pragma region TypeNode
 //////////////////////////////// TypeNode ////////////////////////////////
 TypeNode::TypeNode(PrimitiveType type) : type(type) {}
 
@@ -118,9 +113,7 @@ void TypeNode::print(int indent) const {
     printIndent(indent);
     std::cout << "TypeNode: " << primitiveTypeToString(type) << std::endl;
 }
-#pragma endregion
 
-#pragma region ParamNode
 //////////////////////////////// ParamNode ////////////////////////////////
 ParamNode::ParamNode(const std::string& id, TypeNode* type) : id(id), type(type) {}
 
@@ -136,9 +129,7 @@ void ParamNode::print(int indent) const {
     std::cout << "Type:" << std::endl;
     type->print(indent + 2);
 }
-#pragma endregion
 
-#pragma region BlockNode
 //////////////////////////////// BlockNode ////////////////////////////////
 BlockNode::BlockNode(std::vector<CodeItemNode*>* statements) : statements(statements) {}
 
@@ -160,9 +151,7 @@ void BlockNode::print(int indent) const {
         }
     }
 }
-#pragma endregion
 
-#pragma region AssignmentStmtNode
 //////////////////////////////// AssignmentStmtNode ////////////////////////////////
 AssignmentStmtNode::AssignmentStmtNode(const std::string& id, ExprNode* expr) : id(id), expr(expr) {}
 
@@ -175,9 +164,7 @@ void AssignmentStmtNode::print(int indent) const {
     std::cout << "AssignmentStmtNode: " << id << std::endl;
     expr->print(indent + 1);
 }
-#pragma endregion
 
-#pragma region IfStmtNode
 //////////////////////////////// IfStmtNode ////////////////////////////////
 IfStmtNode::IfStmtNode(ExprNode* condition, BlockNode* thenBlock, BlockNode* elseBlock)
     : condition(condition), thenBlock(thenBlock), elseBlock(elseBlock) {}
@@ -208,9 +195,7 @@ void IfStmtNode::print(int indent) const {
         elseBlock->print(indent + 2);
     }
 }
-#pragma endregion
 
-#pragma region WhileStmtNode
 //////////////////////////////// WhileStmtNode ////////////////////////////////
 WhileStmtNode::WhileStmtNode(ExprNode* condition, BlockNode* body)
     : condition(condition), body(body) {}
@@ -232,9 +217,7 @@ void WhileStmtNode::print(int indent) const {
     std::cout << "Body:" << std::endl;
     body->print(indent + 2);
 }
-#pragma endregion
 
-#pragma region PrintStmtNode
 //////////////////////////////// PrintStmtNode ////////////////////////////////
 PrintStmtNode::PrintStmtNode(ExprNode* expr) : expr(expr) {}
 
@@ -247,9 +230,7 @@ void PrintStmtNode::print(int indent) const {
     std::cout << "PrintStmtNode" << std::endl;
     expr->print(indent + 1);
 }
-#pragma endregion
 
-#pragma region ReturnStmtNode
 //////////////////////////////// ReturnStmtNode ////////////////////////////////
 ReturnStmtNode::ReturnStmtNode(ExprNode* expr) : expr(expr) {}
 
@@ -262,9 +243,7 @@ void ReturnStmtNode::print(int indent) const {
     std::cout << "ReturnStmtNode" << std::endl;
     expr->print(indent + 1);
 }
-#pragma endregion
 
-#pragma region IdentifierNode
 //////////////////////////////// IdentifierNode ////////////////////////////////
 IdentifierNode::IdentifierNode(const std::string& id) : id(id) {}
 
@@ -272,9 +251,7 @@ void IdentifierNode::print(int indent) const {
     printIndent(indent);
     std::cout << "IdentifierNode: " << id << std::endl;
 }
-#pragma endregion
 
-#pragma region LiteralNode
 //////////////////////////////// LiteralNode ////////////////////////////////
 LiteralNode::LiteralNode(int val) : value(val) {}
 LiteralNode::LiteralNode(double val) : value(val) {}
@@ -286,9 +263,7 @@ void LiteralNode::print(int indent) const {
     std::visit([](auto&& arg) { std::cout << arg; }, value);
     std::cout << std::endl;
 }
-#pragma endregion
 
-#pragma region FuncCallNode
 //////////////////////////////// FuncCallNode ////////////////////////////////
 FuncCallNode::FuncCallNode(const std::string& id, std::vector<ExprNode*>* args) : id(id), args(args) {}
 
@@ -316,9 +291,7 @@ void FuncCallNode::print(int indent) const {
         std::cout << "(none)" << std::endl;
     }
 }
-#pragma endregion
 
-#pragma region UnaryOpNode
 //////////////////////////////// UnaryOpNode ////////////////////////////////
 UnaryOpNode::UnaryOpNode(ExprNode* expr) : expr(expr) {}
 
@@ -331,9 +304,7 @@ void UnaryOpNode::print(int indent) const {
     std::cout << "UnaryOpNode: -" << std::endl;
     expr->print(indent + 1);
 }
-#pragma endregion
 
-#pragma region BinaryOpNode
 //////////////////////////////// BinaryOpNode ////////////////////////////////
 BinaryOpNode::BinaryOpNode(ExprNode* left, BinaryOperator op, ExprNode* right)
     : left(left), op(op), right(right) {}
@@ -355,6 +326,5 @@ void BinaryOpNode::print(int indent) const {
     std::cout << "RHS:" << std::endl;
     right->print(indent + 2);
 }
-#pragma endregion
 
 // Add other AST node implementations here...
